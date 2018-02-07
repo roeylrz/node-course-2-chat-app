@@ -14,6 +14,18 @@ app.use(express.static(publicPath));//To configure the Express Static Midleware
 io.on('connection', (socket) => {
     console.log('New user connected');
 
+    socket.emit('newMessage', {
+        from:'Admin',
+        text:'Welcome to the chat app',
+        createdAt: new Date().getTime()
+    });
+
+    socket.broadcast.emit('newMessage', {
+        from:'Admin',
+        text:'New user joined',
+        createdAt: new Date().getTime()
+    });
+
     //emit - socket has this method in order to emit events (and not listening to events like on)
     //socket.emit - emits event to a single connection
     // socket.emit('newMessage', {
@@ -24,12 +36,18 @@ io.on('connection', (socket) => {
 
     socket.on('createMessage', (message) => {
         console.log('create message', message);
-    //io.emit - emits event to every single connection
-    io.emit('newMessage', {
+        //io.emit - emits event to every single connection
+        io.emit('newMessage', {
             from: message.from,
             text: message.text,
             createdAt: new Date().getTime()
         });
+        //socket.broadcast.emit - emits the event every users, except for this user(this socket)
+        // socket.broadcast.emit('newMessage', {
+        //         from: message.from,
+        //         text: message.text,
+        //         createdAt: new Date().getTime()
+        //     });
     });
 
     socket.on('disconnect', () => {
