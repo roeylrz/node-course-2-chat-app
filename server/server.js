@@ -14,15 +14,23 @@ app.use(express.static(publicPath));//To configure the Express Static Midleware
 io.on('connection', (socket) => {
     console.log('New user connected');
 
-    socket.emit('newMessage', {//emit - socket has this method in order to emit events (and not listening to events like on)
-        from: 'roey',
-        text: 'Hey. How are you ?',
-        createAt: 123123
-    }); 
+    //emit - socket has this method in order to emit events (and not listening to events like on)
+    //socket.emit - emits event to a single connection
+    // socket.emit('newMessage', {
+    //     from: 'roey',
+    //     text: 'Hey. How are you ?',
+    //     createAt: 123123
+    // }); 
 
     socket.on('createMessage', (message) => {
         console.log('create message', message);
-    })
+    //io.emit - emits event to every single connection
+    io.emit('newMessage', {
+            from: message.from,
+            text: message.text,
+            createdAt: new Date().getTime()
+        });
+    });
 
     socket.on('disconnect', () => {
         console.log('User was disconnected');
