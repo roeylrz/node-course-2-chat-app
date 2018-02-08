@@ -1,3 +1,20 @@
 npm i socket.io@1.4.8 --save
 
 Broadcasting - To emit event to all users, except for specific user.
+
+ //emit - socket has this method in order to emit events (and not listening to events like on)
+    //socket.emit - emits event to a single connection
+    // socket.emit('newMessage', {
+    //     from: 'roey',
+    //     text: 'Hey. How are you ?',
+    //     createAt: 123123
+    // }); 
+
+ //io.emit - emits event to every single connection
+        io.emit('newMessage', generateMessage(message.from, message.text));
+ //socket.broadcast.emit - emits the event every users, except for this user(this socket)
+        // socket.broadcast.emit('newMessage', {
+        //         from: message.from,
+        //         text: message.text,
+        //         createdAt: new Date().getTime()
+        //     });

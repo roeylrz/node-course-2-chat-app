@@ -1,0 +1,5 @@
+Allows us to make DOM manipulations
+Download from http://jquery.com/
+Then, open "Download the compressed, production jQuery 3.3.1" in new tab. then will we see to actual javascript we want to use in our application.
+Then save the file in the project.
+Then load it in the html file.

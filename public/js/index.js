@@ -10,9 +10,24 @@ socket.on('connect', function() {
     //     text: 'Hey, how are you ?'
     // });
 });
+
 socket.on('disconnect',function () {
     console.log('Disconnected from server')
 });
-socket.on('newMessage', function(createMessage){
-    console.log('newMessage', createMessage);
-})
+
+socket.on('newMessage', function(message){
+    console.log('newMessage', message);
+    let li = jQuery('<li></li>');//Create new element
+    li.text(`${message.from}: ${message.text}`);
+    jQuery('#messages').append(li);
+});
+
+jQuery('#message-form').on('submit', function(e){
+    e.preventDefault();
+    socket.emit('createMessage', {
+        from: 'User',
+        text: jQuery('[name="message"]').val()//[name="message"] - to get <input name="message" type="text" placeholder="Message" /> from index.html;
+    }, function () {
+
+    });
+});

@@ -27,7 +27,7 @@ io.on('connection', (socket) => {
     //     createAt: 123123
     // }); 
 
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => {
         console.log('create message', message);
         //io.emit - emits event to every single connection
         io.emit('newMessage', generateMessage(message.from, message.text));
@@ -37,6 +37,7 @@ io.on('connection', (socket) => {
         //         text: message.text,
         //         createdAt: new Date().getTime()
         //     });
+        callback('This is from the server!');
     });
 
     socket.on('disconnect', () => {
