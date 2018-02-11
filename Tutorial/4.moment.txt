@@ -1,0 +1,4 @@
+npm i moment@2.15.1 --save
+
+http://momentjs.com/ -> docs
+For examples go to: http://momentjs.com/docs/#/displaying/
