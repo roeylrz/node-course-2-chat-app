@@ -2,6 +2,22 @@
 //when we call it we initiate the request from the client to the server to open up a web socket and keep that connection open.
 var socket = io();
 
+function scrollToButtom(){
+    //Selectors
+    let messages = jQuery('#messages');
+    let newMessage = messages.children('li:last-child');
+    //Heights
+    let clientHeight = messages.prop('clientHeight');//messages.prop - cross browsers  way to fetch a property. JQuery alternative
+    let scrollTop = messages.prop('scrollTop');
+    let scrollHeight = messages.prop('scrollHeight');
+    let newMessageHeight = newMessage.innerHeight();
+    let lastMessageHeight = newMessage.prev().innerHeight();
+    if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+        messages.scrollTop(scrollHeight);
+    }
+
+}
+
 socket.on('connect', function() {
     console.log('Connected to server')
 
@@ -24,6 +40,7 @@ socket.on('newMessage', function(message){
         createdAt: formattedTime
     });
     jQuery('#messages').append(html);
+    scrollToButtom();
 });
 
 socket.on('newLocationMessage', function(message){
@@ -35,6 +52,7 @@ socket.on('newLocationMessage', function(message){
         createdAt: formattedTime
     });
     jQuery('#messages').append(html);
+    scrollToButtom();
 });
 
 jQuery('#message-form').on('submit', function(e){//# - using '#' for ID
