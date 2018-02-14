@@ -18,3 +18,10 @@ Broadcasting - To emit event to all users, except for specific user.
         //         text: message.text,
         //         createdAt: new Date().getTime()
         //     });
+
+socket.join(join_parameter) - emit to everyone that have the join_parameter
+From there -
+        1. io.emit -> io.to(join_parameter)
+        2. socket.broadcast.emit(join_parameter)
+        3. socket.emit -> No need to do somthing special because we are sending to specific user
+socket.leave - to leave the room
